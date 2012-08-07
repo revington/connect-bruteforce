@@ -19,8 +19,6 @@ exports = module.exports = function (options) {
         return new Date().getTime() + (factor * 1000);
     };
     self.prevent = function (req, res, next) {
-        if (!next) {
-        }
         req.delayed = self.db[self.clientID(req)];
         if (req.delayed) {
             var responseAt = self.responseAt(req.delayed);
