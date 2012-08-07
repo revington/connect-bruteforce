@@ -18,9 +18,9 @@ var bruteForce = new (require('benji'))({banFactor: 2, banMax: 30});
 
 /*...*/
 
-app.post('login', bruteForce.prevent, function(req,res){
+app.post('/login', bruteForce.prevent, function(req,res){
 	var useCaptcha = res.delay && res.delay.counter > 3;
-	if(req.body.login === 'user' && req.body.password === 'root' && !useCaptcha || testCaptcha(req)){
+	if(req.body.login === 'user' && req.body.password === 'root' && (!useCaptcha || testCaptcha(req))){
 		// just in case client was already banned
 		bruteForce.unban(req);
 		// set user in session and bla, bla, bla…
@@ -31,5 +31,6 @@ app.post('login', bruteForce.prevent, function(req,res){
 	res.render('login', {badLogin: true, useCaptcha: useCaptcha});
 });
 
+/*...*/
 
 ```
