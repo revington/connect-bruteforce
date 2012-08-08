@@ -37,6 +37,6 @@ exports = module.exports = function (options) {
         delay.lastTimeBanned = new Date();
     };
     self.unban = function (req) {
-        delete self.db[self.findClient(req)];
+        delete self.db[self.clientID(req)];
     };
 };
