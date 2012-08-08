@@ -1,0 +1,25 @@
+{
+    "author": "Pedro Narciso García Revington <p.revington@gmail.com> (http://revington.github.com/)",
+    "name": "benji",
+    "description": "A brute force login prevention middleware",
+    "version": "0.0.0",
+    "homepage": "https://github.com/revington/benji",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/revington/benji.git"
+    },
+    "main": "index",
+    "scripts": {
+        "test": "make test"
+    },
+    "engines": {
+      "node": "*"
+    },
+    "dependencies": {
+        "connect": "*"
+    },
+    "devDependencies": {
+        "mocha": "*"
+    }, "keywords" :["brute force", "login"]
+
+}
