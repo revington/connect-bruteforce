@@ -14,7 +14,7 @@ Synopsis
 // Each failed login increments delay by 2 seconds. 
 // With a maximun delay of 30 seconds.
 
-var bruteForce = new (require('benji'))({banFactor: 2, banMax: 30});
+var bruteForce = new (require('benji'))({banFactor: 2000, banMax: 30000});
 
 /*...*/
 

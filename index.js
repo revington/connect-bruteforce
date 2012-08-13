@@ -1,8 +1,8 @@
 exports = module.exports = function (options) {
     var self = this,
         settings = options || {};
-    settings.banMax = settings.banMax || 30;
-    settings.banFactor = settings.banFactor || 2;
+    settings.banMax = settings.banMax || 30 * 1000;
+    settings.banFactor = settings.banFactor || 2 * 1000;
     self.db = {};
     self.clientID = function (req) {
         return req.connection.remoteAddress;
@@ -16,7 +16,7 @@ exports = module.exports = function (options) {
     };
     self.responseAt = function (delay) {
         var factor = Math.min(delay.counter * settings.banFactor, settings.banMax);
-        return new Date().getTime() + (factor * 1000);
+        return new Date().getTime() + factor;
     };
     self.prevent = function (req, res, next) {
         req.delayed = self.db[self.clientID(req)];
@@ -38,5 +38,6 @@ exports = module.exports = function (options) {
     };
     self.unban = function (req) {
         delete self.db[self.clientID(req)];
+				delete req.delayed;
     };
 };
