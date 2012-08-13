@@ -1,11 +1,10 @@
-connect-bruteforce
-=====
+# connect-bruteforce
 
-A connect middleware to prevent bruteforce.
+> A connect middleware to prevent bruteforce.
 
-Synopsis
---------
-```javascript
+## Example:
+
+```js
 // A simple application
 // we want to require a captcha validation after 3 
 // failed login attemts. 
@@ -34,3 +33,6 @@ app.post('/login', bruteForce.prevent, function(req,res){
 /*...*/
 
 ```
+## Install 
+	$ npm install connect-bruteforce
+
