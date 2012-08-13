@@ -1,4 +1,4 @@
-var benji = require('..'),
+var bf = require('..'),
     assert = require('assert'),
     http = require('http'),
     express = require('express');
@@ -6,7 +6,7 @@ describe('Increment delay by 100ms on each request up to 500. Unban at eighth.',
     var calls = [],
         app = express(),
         // set up a benji instance
-        m = new benji({
+        m = new bf({
             banFactor: 100,
             banMax: 500
         }),

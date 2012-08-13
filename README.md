@@ -1,7 +1,7 @@
-benji
+connect-bruteforce
 =====
 
-A nodejs connect middleware to prevent bruteforce
+A connect middleware to prevent bruteforce.
 
 Synopsis
 --------

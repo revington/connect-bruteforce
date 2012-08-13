@@ -1,12 +1,12 @@
 {
     "author": "Pedro Narciso García Revington <p.revington@gmail.com> (http://revington.github.com/)",
-    "name": "benji",
-    "description": "A brute force login prevention middleware",
+    "name": "connect-bruteforce",
+    "description": "A brute force prevention middleware",
     "version": "0.0.0",
-    "homepage": "https://github.com/revington/benji",
+    "homepage": "https://github.com/revington/connect-bruteforce",
     "repository": {
         "type": "git",
-        "url": "git://github.com/revington/benji.git"
+        "url": "git://github.com/revington/connect-bruteforce.git"
     },
     "main": "index",
     "scripts": {
