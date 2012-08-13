@@ -11,7 +11,9 @@ exports = module.exports = function (options) {
         if (responseAt < new Date().getTime()) {
             next();
         } else {
-            process.nextTick(function(){self.delay(responseAt, next);});
+            process.nextTick(function () {
+                self.delay(responseAt, next);
+            });
         }
     };
     self.responseAt = function (delay) {
@@ -22,7 +24,9 @@ exports = module.exports = function (options) {
         req.delayed = self.db[self.clientID(req)];
         if (req.delayed) {
             var responseAt = self.responseAt(req.delayed);
-            process.nextTick(function(){self.delay(responseAt, next);});
+            process.nextTick(function () {
+                self.delay(responseAt, next);
+            });
         } else {
             next();
         }
@@ -38,6 +42,6 @@ exports = module.exports = function (options) {
     };
     self.unban = function (req) {
         delete self.db[self.clientID(req)];
-				delete req.delayed;
+        delete req.delayed;
     };
 };
