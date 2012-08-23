@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/revington/connect-bruteforce.png)](http://travis-ci.org/revington/connect-bruteforce)
 # connect-bruteforce
 
 > A connect middleware to prevent bruteforce.
