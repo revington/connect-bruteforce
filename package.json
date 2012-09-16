@@ -13,13 +13,18 @@
         "test": "make test"
     },
     "engines": {
-      "node": "*"
+        "node": "*"
     },
     "dependencies": {
         "connect": "*"
     },
     "devDependencies": {
-        "mocha": "*"
-    }, "keywords" :["brute force", "login"]
-
+        "mocha": "*",
+        "express": "*"
+    },
+    "keywords": ["brute force", "login"],
+    "directories": {
+        "test": "test"
+    },
+    "license": "BSD"
 }
