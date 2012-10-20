@@ -1,1 +1,1 @@
-Based on https://github.com/visionmedia/express/examples/auth
+Based on https://github.com/visionmedia/express/tree/master/examples/auth
