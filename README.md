@@ -1,39 +1,30 @@
 [![build status](https://secure.travis-ci.org/revington/connect-bruteforce.png)](http://travis-ci.org/revington/connect-bruteforce)
 # connect-bruteforce
 
-> A connect middleware to prevent bruteforce.
+> A connect middleware to prevent brute force by delaying responses.
 
-## Example:
-
-```js
-// A simple application
-// we want to require a captcha validation after 3 
-// failed login attemts. 
-
-// We want to introduce a delay in server response.
-// Each failed login increments delay by 2 seconds. 
-// With a maximun delay of 30 seconds.
-
-var bruteForce = new (require('connect-bruteforce'))({banFactor: 2000, banMax: 30000});
-
-/*...*/
-
-app.post('/login', bruteForce.prevent, function(req,res){
-	var useCaptcha = res.delay && res.delay.counter > 3;
-	if(req.body.login === 'user' && req.body.password === 'root' && (!useCaptcha || testCaptcha(req))){
-		// just in case client was already banned
-		bruteForce.unban(req);
-		// set user in session and bla, bla, bla…
-		res.render('members');
-	}else{
-		bruteForce.ban(req);
-	}
-	res.render('login', {badLogin: true, useCaptcha: useCaptcha});
-});
-
-/*...*/
-
-```
 ## Install 
 	$ npm install connect-bruteforce
 
+## Usage (express)
+
+	// See examples/express-hello-world/index.js
+	var loginBruteforce = require('connect-bruteforce')();
+
+	app.get('/login', function (req, res) {
+    	res.render('login');
+	});
+	app.post('/login', loginBruteForce.prevent, function (req, res, next) {
+    	authenticate(req.body.username, req.body.password, function (err, user) {
+        	if (user) {
+            	req.session.user = user;
+            	loginBruteForce.unban(req);
+            	req.session.success = 'Authenticated as ' + user + ' click to <a href="/logout">logout</a>. ' + ' You may now access <a href="/restricted">/restricted</a>.';
+            	res.redirect('back');
+        	} else {
+            	loginBruteForce.ban(req);
+            	req.session.error = 'Authentication failed. Hint u: root, p: root';
+            	res.redirect('login');
+        	}
+    	});
+	});
