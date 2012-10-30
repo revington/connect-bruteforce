@@ -1,0 +1,31 @@
+<% var title = 'connect-bruteforce express Authentication Example' %>
+<% include head %>
+
+<h1>Login</h1>
+<%- message %>
+Try accessing <a href="/restricted">/restricted</a>.
+<pre>
+User: root
+Password: root
+</pre>
+For each bad login attempt you should experiment an (incremental) 500ms delay in response. 
+Up to 2000ms.
+<br />
+After a successful login delay should disapear.
+
+<form method="post" action="/login">
+<%- recaptcha_form || ''%>
+  <p>
+    <label>Username:</label>
+    <input type="text" name="username">
+  </p>
+  <p>
+    <label>Password:</label>
+    <input type="text" name="password">
+  </p>
+  <p>
+    <input type="submit" value="Login">
+  </p>
+</form>
+
+<% include foot %>

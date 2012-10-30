@@ -1,0 +1,16 @@
+{
+  "name": "hello-world",
+  "version": "0.0.0",
+  "description": "A connect-bruteforce example based on express/examples/auth",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "ejs": "~0.8.3",
+    "express": "~3.0.0rc5"
+  }
+}
