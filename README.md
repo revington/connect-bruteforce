@@ -1,30 +1,21 @@
 [![build status](https://secure.travis-ci.org/revington/connect-bruteforce.png)](http://travis-ci.org/revington/connect-bruteforce)
 # connect-bruteforce
 
-> A connect middleware to prevent brute force by delaying responses.
+A [connect](https://github.com/senchalabs/connect) middleware to prevent brute force by delaying responses.
+Available as a npm package.
 
 ## Install 
-	$ npm install connect-bruteforce
 
-## Usage (express)
+	$npm install connect-bruteforce
 
-	// See examples/express-hello-world/index.js
-	var loginBruteforce = require('connect-bruteforce')();
+## Usage 
 
-	app.get('/login', function (req, res) {
-    	res.render('login');
-	});
-	app.post('/login', loginBruteForce.prevent, function (req, res, next) {
-    	authenticate(req.body.username, req.body.password, function (err, user) {
-        	if (user) {
-            	req.session.user = user;
-            	loginBruteForce.unban(req);
-            	req.session.success = 'Authenticated as ' + user + ' click to <a href="/logout">logout</a>. ' + ' You may now access <a href="/restricted">/restricted</a>.';
-            	res.redirect('back');
-        	} else {
-            	loginBruteForce.ban(req);
-            	req.session.error = 'Authentication failed. Hint u: root, p: root';
-            	res.redirect('login');
-        	}
-    	});
-	});
+See [examples](https://github.com/revington/connect-bruteforce/tree/master/examples)
+
+## Testing 
+
+npm test
+
+## License
+
+See [LICENSE](https://github.com/revington/connect-bruteforce/blob/master/LICENSE)
