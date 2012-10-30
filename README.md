@@ -6,7 +6,7 @@ Available as a npm package.
 
 ## Install 
 
-	$npm install connect-bruteforce
+	$ npm install connect-bruteforce
 
 ## Usage 
 
@@ -14,7 +14,7 @@ See [examples](https://github.com/revington/connect-bruteforce/tree/master/examp
 
 ## Testing 
 
-npm test
+	$ npm test
 
 ## License
 
