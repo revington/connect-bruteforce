@@ -1,10 +1,7 @@
 var express = require('express'),
     bruteforce = require('../../'),
-    Recaptcha = require('recaptcha').Recaptcha,
-    recaptchaKeys = {
-        PUBLIC: '6Ler-9cSAAAAALgxcaiMpgfDb6tL36IvM2dCb7g7',
-        PRIVATE: '6Ler-9cSAAAAAMO0RJB39zFvYwLHvykldkml2uWK'
-    };
+    Recaptcha = require('recaptcha').Recaptcha;
+// Express application
 var app = module.exports = express(),
     // Set max delay and factor in ms
     loginBruteForce = new bruteforce({
@@ -28,11 +25,26 @@ function restrict(req, res, next) {
         res.redirect('/login');
     }
 }
+//////////////////////////////////////////////////////////////////
+// Recaptcha integration
+//
+// We require recaptcha validation after a *number* of
+// bad logins.
+//
+//////////////////////////////////////////////////////////////////
 
 function requireRecaptchaAfterTries(number) {
+    /*
+     * Recaptcha keypair
+     * http://www.google.com/recaptcha/whyrecaptcha
+     */
+    var recaptchaKeys = {
+        PUBLIC: '6Ler-9cSAAAAALgxcaiMpgfDb6tL36IvM2dCb7g7',
+        PRIVATE: '6Ler-9cSAAAAAMO0RJB39zFvYwLHvykldkml2uWK'
+    };
     return function (req, res, next) {
         var badAttempts = req.delayed && req.delayed.counter || -1;
-        // Note: We show recaptcha form prior to require it
+        // Note: We show recaptcha form PRIOr to require it
         if (badAttempts >= number) {
             req.session.recaptchaForm = (new Recaptcha(recaptchaKeys.PUBLIC, recaptchaKeys.PRIVATE)).toHTML();
         }
@@ -55,6 +67,10 @@ function requireRecaptchaAfterTries(number) {
         }
     };
 }
+/*
+ * Just a simple middleware to redirect bad
+ */
+
 function redirectToLoginOnBadRecaptcha(req, res, next) {
     if (!req.requireRecaptcha || req.isValidRecaptcha.success) {
         next();
@@ -64,6 +80,7 @@ function redirectToLoginOnBadRecaptcha(req, res, next) {
         res.redirect('login');
     }
 }
+var recaptchaValidation = [requireRecaptchaAfterTries(3), redirectToLoginOnBadRecaptcha];
 // Express config
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -95,8 +112,7 @@ app.get('/', function (req, res) {
 app.get('/login', function (req, res) {
     res.render('login');
 });
-
-var recaptchaValidation = [requireRecaptchaAfterTries(3), redirectToLoginOnBadRecaptcha];
+// Just add recaptchaValidation to the url
 app.post('/login', loginBruteForce.prevent, recaptchaValidation, function (req, res, next) {
     authenticate(req.body.username, req.body.password, function (err, user) {
         if (user) {
@@ -122,5 +138,5 @@ app.all('/restricted', restrict, function (req, res) {
 });
 if (!module.parent) {
     app.listen(3000);
-    console.log('connect-bruteforce express-hello-world example started on port 3000');
+    console.log('connect-bruteforce express-recaptcha example started on port 3000');
 }
