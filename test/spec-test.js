@@ -1,64 +1,46 @@
-var bf = require('..'),
+var preventBruteForce = new(require('..'))({
+    banFactor: 100,
+    banMax: 500
+}),
+    connect = require('connect'),
     assert = require('assert'),
-    http = require('http'),
-    express = require('express');
+    request = require('supertest'),
+    notifyRequestTime = function (req, res, next) {
+        req.time = new Date().getTime();
+        next();
+    },
+    app = connect();
+app.use(notifyRequestTime);
+app.use(preventBruteForce.prevent);
+app.use(function (req, res) {
+    var counter = (req.delayed && req.delayed.counter) || 0;
+    if (counter === 7) {
+        preventBruteForce.unban(req);
+    } else {
+        preventBruteForce.ban(req);
+    }
+    res.end(JSON.stringify({
+        req: req.time,
+        res: new Date().getTime(),
+        counter: counter
+    }));
+});
 describe('Increment delay by 100ms on each request up to 500. Unban at eighth.', function () {
     var calls = [],
-        app = express(),
-        // set up a benji instance
-        m = new bf({
-            banFactor: 100,
-            banMax: 500
-        }),
-        options = {
-            host: '0.0.0.0',
-            port: 4000,
-            path: '/',
-            method: 'GET'
-        },
-        notifyRequestTime = function (req, res, next) {
-            var now = new Date();
-            req.time = now.getTime();
-            next();
-        };
-    app.get('*', notifyRequestTime, m.prevent, function (req, res) {
-        var counter = (req.delayed && req.delayed.counter) || 0;
-        if (counter === 7) {
-            m.unban(req);
-        } else {
-            m.ban(req);
-        }
-        res.json({
-            req: req.time,
-            res: new Date().getTime(),
-            counter: counter
-        });
-    });
-    var lastCall = function () {
+        lastCall = function () {
             return calls[calls.length - 1];
         };
-    before(function (done) {
-        var server = app.listen(4000, function () {
-            done();
-        });
-    });
     after(function () {
-			assert(calls.length === 10);
+        assert(calls.length === 10);
     });
     beforeEach(function (done) {
-        var data = '';
-        http.get(options, function (res) {
-            res.on('data', function (chunk) {
-                data += chunk;
+        request(app).get('/').end(function (err, res) {
+            var data = JSON.parse(res.text);
+            calls.push({
+                delay: data.res - data.req,
+                counter: data.counter
             });
-            res.on('end', function () {
-                data = JSON.parse(data);
-                calls.push({
-                    delay: data.res - data.req,
-                    counter: data.counter
-                });
-                done();
-            });
+            done();
         });
     });
     it('First call. No delay.', function () {

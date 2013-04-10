@@ -16,7 +16,8 @@
         "node": "*"
     },
     "dependencies": {
-        "connect": "*"
+        "connect": "~2.7.4",
+        "supertest": "~0.5.1"
     },
     "devDependencies": {
         "mocha": "*",
