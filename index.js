@@ -7,26 +7,17 @@ exports = module.exports = function (options) {
     self.clientID = function (req) {
         return req.connection.remoteAddress;
     };
-    self.delay = function (responseAt, next) {
-        if (responseAt < new Date().getTime()) {
+
+    function delayResponse(req, res, next) {
+        var factor = Math.min(req.delayed.counter * settings.banFactor, settings.banMax);
+        setTimeout(function (next) {
             next();
-        } else {
-            process.nextTick(function () {
-                self.delay(responseAt, next);
-            });
-        }
-    };
-    self.responseAt = function (delay) {
-        var factor = Math.min(delay.counter * settings.banFactor, settings.banMax);
-        return new Date().getTime() + factor;
-    };
+        }, factor, next);
+    }
     self.prevent = function (req, res, next) {
         req.delayed = self.db[self.clientID(req)];
         if (req.delayed) {
-            var responseAt = self.responseAt(req.delayed);
-            process.nextTick(function () {
-                self.delay(responseAt, next);
-            });
+            delayResponse(req, res, next);
         } else {
             next();
         }
