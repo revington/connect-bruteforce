@@ -28,9 +28,7 @@ app.use(function (req, res) {
 describe('Increment delay by 100ms on each request up to 500. Unban at eighth.', function () {
     var calls = [],
         lastCall = function () {
-            var a =  calls[calls.length - 1];
-	    console.log(a);
-	    return a;
+            return calls[calls.length - 1];
         };
     after(function () {
         assert(calls.length === 10);
