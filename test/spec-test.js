@@ -28,7 +28,9 @@ app.use(function (req, res) {
 describe('Increment delay by 100ms on each request up to 500. Unban at eighth.', function () {
     var calls = [],
         lastCall = function () {
-            return calls[calls.length - 1];
+            var a =  calls[calls.length - 1];
+	    console.log(a);
+	    return a;
         };
     after(function () {
         assert(calls.length === 10);
@@ -37,7 +39,7 @@ describe('Increment delay by 100ms on each request up to 500. Unban at eighth.',
         request(app).get('/').end(function (err, res) {
             var data = JSON.parse(res.text);
             calls.push({
-                delay: data.res - data.req,
+                delay: (data.res - data.req) + 1,
                 counter: data.counter
             });
             done();
