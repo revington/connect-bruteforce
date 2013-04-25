@@ -4,7 +4,7 @@ function clientID(req) {
 
 function connectBruteForce(options) {
     var self = this;
-    optinons = options || {};
+    options = options || {};
     options.banMax = options.banMax || 30 * 1000;
     options.banFactor = options.banFactor || 2 * 1000;
     this.db = {};
