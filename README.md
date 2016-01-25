@@ -19,3 +19,7 @@ See [examples](https://github.com/revington/connect-bruteforce/tree/master/examp
 ## License
 
 See [LICENSE](https://github.com/revington/connect-bruteforce/blob/master/LICENSE)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/revington/connect-bruteforce/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
