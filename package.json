@@ -15,15 +15,17 @@
     "engines": {
         "node": "*"
     },
-    "dependencies": {
-        "connect": "~2.7.4"
-    },
+    "dependencies": {},
     "devDependencies": {
-        "mocha": "*",
-        "express": "*",
-        "supertest": "~0.5.1"
+        "connect": "^3.7.0",
+        "express": "^4.17.1",
+        "mocha": "^7.0.0",
+        "supertest": "^4.0.2"
     },
-    "keywords": ["brute force", "login"],
+    "keywords": [
+        "brute force",
+        "login"
+    ],
     "directories": {
         "test": "test"
     },
